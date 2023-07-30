@@ -22,7 +22,10 @@ export const handle: Handle = async ({ event, resolve }) => {
     const [user] = await getUserByToken(authToken)
 
     if (user.status !== 'OK' || user.result.length === 0) {
-        if (!unProtectedRoutes.includes(event.url.pathname)) return redirect('/', 'Not a valid user')
+        event.cookies.delete('authToken', { path: '/' })
+        if (!unProtectedRoutes.includes(event.url.pathname)) {
+            return redirect('/', 'Not a valid user')
+        }
     } else {
         const me = user.result[0]
         event.locals.user = {

@@ -46,8 +46,8 @@ export const actions: Actions = {
         }
 
         const [emailExist] = await checkEmailExist(email)
-        if(emailExist.status !== 'OK' || emailExist.result[0].total > 0) {
-            return fail(400, {emailExist: true})
+        if (emailExist.status !== 'OK' || (emailExist.result.length > 0 && emailExist.result[0].total > 0)) {
+            return fail(400, { emailExist: true })
         }
 
         const [register] = await userRegister(email, firstName, lastName, password)
@@ -65,4 +65,3 @@ export const actions: Actions = {
         throw redirect(307, rd && rd !== 'null' ? rd : '/admin')
     }
 }
-
