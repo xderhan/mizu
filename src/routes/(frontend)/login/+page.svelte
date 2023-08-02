@@ -1,6 +1,7 @@
 <script lang="ts">
     import { applyAction, enhance } from '$app/forms'
     import Eye from '$lib/components/icons/Eye.svelte'
+    import EyeOff from '$lib/components/icons/EyeOff.svelte'
     import type { PageData, ActionData } from './$types'
 
     let isLoading = false
@@ -77,7 +78,11 @@
                     class="link-secondary"
                     title="Show password"
                     data-bs-toggle="tooltip">
-                    <Eye size={24} />
+                    {#if showPassword}
+                        <EyeOff size={24} />
+                    {:else}
+                        <Eye size={24} />
+                    {/if}
                 </a>
             </span>
             {#if form?.passwordMissing}
