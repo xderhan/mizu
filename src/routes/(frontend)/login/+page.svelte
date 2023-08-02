@@ -1,6 +1,6 @@
 <script lang="ts">
     import { applyAction, enhance } from '$app/forms'
-    import User from '$lib/components/icons/User.svelte'
+    import Eye from '$lib/components/icons/Eye.svelte'
     import type { PageData, ActionData } from './$types'
 
     let isLoading = false
@@ -77,7 +77,7 @@
                     class="link-secondary"
                     title="Show password"
                     data-bs-toggle="tooltip">
-                    <User size={24} />
+                    <Eye size={24} />
                 </a>
             </span>
             {#if form?.passwordMissing}
