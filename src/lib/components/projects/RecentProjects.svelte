@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Project } from "$lib/models"
+    import { fly, slide } from "svelte/transition"
 
     export let projects: Project[] = []
 </script>
@@ -20,7 +21,7 @@
                     </thead>
                     <tbody>
                         {#each projects as item, i}
-                            <tr>
+                            <tr in:fly={{ y: 20 }} out:slide>
                                 <td class="text-center">{i + 1}</td>
                                 <td>{item.nama}</td>
                                 <td class="text-center">

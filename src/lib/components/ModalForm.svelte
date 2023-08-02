@@ -2,6 +2,7 @@
     import { createEventDispatcher } from 'svelte'
     import { enhance, applyAction } from '$app/forms'
     import { invalidateAll } from '$app/navigation'
+    import { fly } from 'svelte/transition'
 
     const dispatch = createEventDispatcher()
 
@@ -25,16 +26,13 @@
     }
 </script>
 
+{#if isOpen}
 <div
-    class="modal modal-blur fade"
-    class:show={isOpen}
-    id="modal-report"
+    in:fly={{ y: -500, x: 0, duration: 500 }} out:fly={{ y:-250, x: 0, duration: 500 }}
+    class="modal modal-blur fade show"
     tabindex="-1"
     role="dialog"
-    aria-modal={isOpen}
-    aria-hidden={!isOpen}
-    style:display={isOpen ? 'block' : 'none'}
->
+    style="display: block">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -94,3 +92,4 @@
         </div>
     </div>
 </div>
+{/if}
