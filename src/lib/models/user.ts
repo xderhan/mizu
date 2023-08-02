@@ -39,7 +39,8 @@ export const userLogin = async (email: string | undefined, password: string | un
  * @returns Promise<[QueryResult<EmailExist[]>]>
  */
 export const checkEmailExist = async (email: string | undefined) => {
-    return await db.query<[EmailExist[]]>(`SELECT count(email=$email) AS total FROM user`, {
+    return await db.query<[EmailExist[]]>(`SELECT count(email=$email) AS total FROM type::table($tb)`, {
+        tb: 'user',
         email
     })
 }
@@ -60,7 +61,7 @@ export const userRegister = async (
     password: string | undefined
 ) => {
     return await db.query<[User[]]>(
-        `CREATE user CONTENT {
+        `CREATE type::table($tb) CONTENT {
                 id: rand::uuid(),
                 email: $email,
                 firstName: $firstName,
@@ -70,6 +71,7 @@ export const userRegister = async (
                 isAdmin: false,
             }`,
         {
+            tb: 'user',
             email,
             firstName,
             lastName,
@@ -85,7 +87,8 @@ export const userRegister = async (
  * @returns Promise<[QueryResult<User[]>]>
  */
 export const userLogout = async (authToken: string | undefined) => {
-    return await db.query<[User[]]>(`UPDATE user SET token = NULL WHERE token = $authToken`, {
+    return await db.query<[User[]]>(`UPDATE type::table($tb) SET token = NULL WHERE token = $authToken`, {
+        tb: 'user',
         authToken
     })
 }
@@ -97,7 +100,11 @@ export const userLogout = async (authToken: string | undefined) => {
  * @returns Promise<[QueryResult<LoginToken[]>]>
  */
 export const generateToken = async (userId: string) => {
-    return await db.query<[LoginToken[]]>(`UPDATE user SET token = rand::uuid::v4() WHERE id = $userId RETURN id, token`, {
-        userId
-    })
+    return await db.query<[LoginToken[]]>(
+        `UPDATE type::table($tb) SET token = rand::uuid::v4() WHERE id = $userId RETURN id, token`,
+        {
+            tb: 'user',
+            userId
+        }
+    )
 }

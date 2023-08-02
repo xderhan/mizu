@@ -1,5 +1,6 @@
 <script lang="ts">
     import { applyAction, enhance } from '$app/forms'
+    import User from '$lib/components/icons/User.svelte'
     import type { PageData, ActionData } from './$types'
 
     let isLoading = false
@@ -45,7 +46,7 @@
             class="form-control"
             placeholder="your@email.com"
             autocomplete="off"
-            class:is-invalid={form?.emailMissing || form?.emailExist}
+            class:is-invalid={form?.emailMissing || form?.emailExist || form?.invalidEmail}
         />
         {#if form?.emailMissing}
             <div class="invalid-feedback">Email is Required!</div>
@@ -53,7 +54,10 @@
         {#if form?.emailExist}
             <div class="invalid-feedback">Email already registered!</div>
         {/if}
-   </div>
+        {#if form?.invalidEmail}
+            <div class="invalid-feedback">Invalid email address</div>
+        {/if}
+  </div>
     <div class="mb-3">
         <label class="form-label" for="firstName">First Name</label>
         <input
@@ -102,24 +106,8 @@
                     on:click|preventDefault={() => (showPassword = !showPassword)}
                     class="link-secondary"
                     title="Show password"
-                    data-bs-toggle="tooltip"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                    </svg>
+                    data-bs-toggle="tooltip">
+                    <User size={24} />
                 </a>
             </span>
             {#if form?.passwordMissing}
@@ -145,24 +133,8 @@
                     on:click|preventDefault={() => (showPassword = !showPassword)}
                     class="link-secondary"
                     title="Show password"
-                    data-bs-toggle="tooltip"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="icon"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        stroke-width="2"
-                        stroke="currentColor"
-                        fill="none"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                        <path d="M21 12c-2.4 4 -5.4 6 -9 6c-3.6 0 -6.6 -2 -9 -6c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6" />
-                    </svg>
+                    data-bs-toggle="tooltip">
+                    <User size={24} />
                 </a>
             </span>
             {#if form?.confirmPasswordMissing}

@@ -7,7 +7,7 @@
         <div class="container container-tight py-4">
             <div class="text-center mb-4">
                 <a href="/" class="navbar-brand navbar-brand-autodark">
-                    <img src={logo} height="72" alt="Mizu Application" />
+                    <img src={logo} height="72" alt="Aplikasi PSDA" />
                 </a>
             </div>
             <div class="card card-md">

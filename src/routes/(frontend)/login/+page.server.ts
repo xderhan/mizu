@@ -1,6 +1,7 @@
 import type { PageServerLoad } from './$types'
 import { fail, redirect, type Actions } from '@sveltejs/kit'
 import { generateToken, userLogin, userLogout } from '$lib/models/user'
+import { validateEmail } from '$lib/tools'
 
 export const load: PageServerLoad = ({ locals, url }) => {
     if (locals.user) {
@@ -20,6 +21,10 @@ export const actions: Actions = {
 
         if (!email) {
             return fail(400, { emailMissing: true })
+        }
+
+        if (!validateEmail(email)) {
+            return fail(400, { invalidEmail: true })
         }
 
         if (!password) {
